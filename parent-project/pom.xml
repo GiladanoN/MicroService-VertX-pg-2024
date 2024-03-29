@@ -11,9 +11,13 @@
   <!-- THIS MAKES THE PROJECT A MAVEN *PARENT* PROJECT (multi-module) -->
   <packaging>pom</packaging>
 
+  <modules>
+    <module>auth-test-module</module>
+  </modules>
+
   <name>parent-project</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/GiladanoN/MicroService-VertX-pg-2024/</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
