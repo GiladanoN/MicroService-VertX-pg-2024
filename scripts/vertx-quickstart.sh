@@ -18,3 +18,16 @@ mvn io.reactiverse:vertx-maven-plugin:1.0.24:setup -DvertxBom=vertx-dependencies
 
 # @ 2024-03-29-13:40
 # currently using alt. via direct download of a template via "start.vertx.io" page.
+
+
+
+mvn io.reactiverse:vertx-maven-plugin:1.0.24:setup -DvertxBom=vertx-dependencies \
+-DvertxVersion=4.5.7 \
+-DprojectGroupId=com.giladanon.extraTestModule \
+-DprojectArtifactId=extra-test-module \
+-DprojectVersion=1.0.0-SNAPSHOT \
+-Dverticle=com.giladanon.extraTestModule.MainVerticle \
+
+
+# @ 2024-03-29-15:05
+# currently using this command to create a bare vertx project.
