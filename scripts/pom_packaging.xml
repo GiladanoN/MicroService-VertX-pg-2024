@@ -1,0 +1,13 @@
+
+<!-- THIS MAKES THE PROJECT A MAVEN *PARENT* PROJECT (multi-module) -->
+<packaging>pom</packaging>
+
+<!-- THIS WILL BE ADDED ONCE MODULES ARE ADDED TO PARENT(pre-requisite: prior change) -->
+<!--
+<modules>
+  <module>RestVerticleModule</module>
+  <module>OrderVerticleModule</module>
+  <module>starterVertx</module>
+  ....
+</modules>
+ -->
