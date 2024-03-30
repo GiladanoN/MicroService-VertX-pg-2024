@@ -36,16 +36,16 @@ import io.vertx.ext.web.sstore.cookie.CookieSessionStore;
 public class MainVerticle extends AbstractVerticle {
 
   private final int PORT_NUM = 8888;
-  // private final Router router = null;// Router.router(vertx);
   final String authFilePath = "./authfile.txt";
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
 
     final Router router = Router.router(vertx);
-    // anotherTryV3();
+    hitCountService();
 
-    if (false) {
+    boolean disableFromLine47 = true;
+    if (disableFromLine47) {
       return;
     }
 
@@ -112,6 +112,7 @@ public class MainVerticle extends AbstractVerticle {
         // e.printStackTrace();
     });
 
+    // based on: https://stackoverflow.com/a/54398973
     router.route().failureHandler(failContext -> {
       Throwable failure = failContext.failure();
       String failMsg = (failure != null) ? failure.getMessage() : "Unknown failure on server occured";
@@ -251,7 +252,7 @@ public class MainVerticle extends AbstractVerticle {
     // startSimpleHelloServer(startPromise, PORT_NUM);
   }
 
-  private void anotherTryV3() {
+  private void hitCountService() {
     
     final Router router = Router.router(vertx);
     
