@@ -13,6 +13,7 @@
 
   <modules>
     <module>auth-test-module</module>
+    <module>extra-test-module</module>
   </modules>
 
   <name>parent-project</name>

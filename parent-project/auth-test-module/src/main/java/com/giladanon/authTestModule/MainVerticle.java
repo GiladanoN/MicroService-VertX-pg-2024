@@ -9,6 +9,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
@@ -44,6 +45,25 @@ public class MainVerticle extends AbstractVerticle {
 
     // Entry point to the application, returnes the text message below.
     router.get("/").handler(ResponseHandlers.RootPath());
+
+    router.get("/TestEB").handler(context -> {
+      String uri = context.request().absoluteURI();
+      System.out.println("Entering endpoint handler, requested: " + uri);
+      
+      Object message = new Object();
+      
+      // vertx.eventBus().send("ADD_ORDER", message);
+      vertx.eventBus()
+        .sender("ADD_ORDER")
+        .write(message, res -> {
+          System.out.println("Eventbus returned a result for ADD_ORDER, success=" + res.succeeded());
+          if (res.failed())
+            System.out.println("FAILURE :: " + res.cause().getMessage());
+          context.response().end("wasOrderAdded="+res.succeeded());
+        });
+
+      System.out.println("Exiting endpoint: " + uri);
+    });
 
     router.post("/Login")
       .handler(userAuthHandler) // auth the user cred's (via BasicHTTPAuth headers)
