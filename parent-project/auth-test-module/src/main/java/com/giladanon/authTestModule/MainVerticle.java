@@ -1,5 +1,13 @@
 package com.giladanon.authTestModule;
 
+import java.time.Instant;
+import java.util.Date;
+import java.util.UUID;
+
+import com.giladanon.authTestModule.DataObjects.GenericCodec;
+import com.giladanon.authTestModule.DataObjects.Order;
+import com.giladanon.authTestModule.DataObjects.OrderToAdd;
+import com.giladanon.authTestModule.DataObjects.OrderToAddCodec;
 import com.giladanon.authTestModule.Handlers.*;
 import com.giladanon.authTestModule.Server.ResponseSender;
 import com.giladanon.authTestModule.Server.ServerStarter;
@@ -50,7 +58,15 @@ public class MainVerticle extends AbstractVerticle {
       String uri = context.request().absoluteURI();
       System.out.println("Entering endpoint handler, requested: " + uri);
       
-      Object message = new Object();
+      Object message = new OrderToAdd()
+        .setOrderToAdd(
+          new Order()
+            .setOrderID(UUID.randomUUID())
+            .setOrderName("my_order123")
+            .setOrderDate(Date.from(Instant.now()))
+        );
+      
+      // message = null;  // enable this line to send 'empty' data
       
       // vertx.eventBus().send("ADD_ORDER", message);
       vertx.eventBus()
