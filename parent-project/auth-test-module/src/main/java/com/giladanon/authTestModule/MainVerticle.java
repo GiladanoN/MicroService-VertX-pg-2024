@@ -26,6 +26,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authorization.Authorizations;
+import io.vertx.ext.auth.impl.UserImpl;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Session;
@@ -71,6 +72,9 @@ public class MainVerticle extends AbstractVerticle {
             .setOrderID(UUID.randomUUID())
             .setOrderName("my_order123")
             .setOrderDate(Date.from(Instant.now()))
+        )
+        .setUser(
+          User.fromName("dummy_user_123")
         );
       
       // message = null;  // enable this line to send 'empty' data
