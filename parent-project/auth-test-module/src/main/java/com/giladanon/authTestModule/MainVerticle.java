@@ -57,6 +57,10 @@ public class MainVerticle extends AbstractVerticle {
     // vertx.eventBus().registerDefaultCodec(
     //     OrderToAdd.class, new OrderToAddCodec()
     //   );
+    vertx.eventBus().registerDefaultCodec(
+        OrderToAdd.class, new GenericCodec<OrderToAdd>(OrderToAdd.class)
+      );
+    
     router.get("/TestEB").handler(context -> {
       String uri = context.request().absoluteURI();
       System.out.println("Entering endpoint handler, requested: " + uri);

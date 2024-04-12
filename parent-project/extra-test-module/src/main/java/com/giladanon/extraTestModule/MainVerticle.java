@@ -13,6 +13,9 @@ public class MainVerticle extends AbstractVerticle {
   public void start(Promise<Void> startPromise) throws Exception {
 
     // vertx.eventBus().registerDefaultCodec(OrderToAdd.class, new OrderToAddCodec());
+    vertx.eventBus().registerDefaultCodec(
+        OrderToAdd.class, new GenericCodec<OrderToAdd>(OrderToAdd.class)
+      );
 
     // this.vertx.fileSystem()
     vertx.eventBus().consumer("ADD_ORDER", (Message<OrderToAdd> message) -> {
