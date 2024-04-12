@@ -1,8 +1,10 @@
-package com.giladanon.extraTestModule;
+package com.giladanon.authTestModule.DataObjects;
+
+import java.io.Serializable;
 
 import io.vertx.ext.auth.User;
 
-public class OrderToAdd {
+public class OrderToAdd implements Serializable {
 
   Order orderToAdd; // the order object and details to add.
   User user;   // the relevant user (auth) who made the request.

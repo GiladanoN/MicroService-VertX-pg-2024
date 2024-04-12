@@ -1,9 +1,10 @@
-package com.giladanon.extraTestModule;
+package com.giladanon.authTestModule.DataObjects;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class Order {
+public class Order implements Serializable {
   
   UUID orderID;
   String orderName;
