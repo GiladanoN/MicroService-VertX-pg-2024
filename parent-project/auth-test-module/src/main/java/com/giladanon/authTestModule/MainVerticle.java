@@ -54,6 +54,9 @@ public class MainVerticle extends AbstractVerticle {
     // Entry point to the application, returnes the text message below.
     router.get("/").handler(ResponseHandlers.RootPath());
 
+    // vertx.eventBus().registerDefaultCodec(
+    //     OrderToAdd.class, new OrderToAddCodec()
+    //   );
     router.get("/TestEB").handler(context -> {
       String uri = context.request().absoluteURI();
       System.out.println("Entering endpoint handler, requested: " + uri);
