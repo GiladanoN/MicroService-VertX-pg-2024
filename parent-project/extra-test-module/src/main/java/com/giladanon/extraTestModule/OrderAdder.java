@@ -78,43 +78,11 @@ public class OrderAdder {
     // Future<AsyncFile> openFileFuture = this.openOrCreateFile();
     Future<OrderList> procFuture =
     this.openOrCreateFile()
-      // .map((AsyncFile file) -> fileHandler.readFileContents(file) )
-      // .map((Future<Buffer> future) -> future.result())
-      // .andThen( (AsyncResult<AsyncFile> fileRes) -> { openedFile = fileRes.result(); } )
-      // .map( (AsyncFile file) -> fileHandler.readFileContents(file).result() )
-      // .map( (AsyncFile file) -> {
-      //   System.out.println("asyncFile: >>> " + file);
-      //   Future<Buffer> bf =
-      //   fileHandler.readFileContents(file);
-      //   Buffer b = bf.result();
-      //   System.out.println("bf: >>> " + bf);
-      //   System.out.println("b: >>> " + b);
-      //   return (
-      //     bf.onComplete(res -> {
-      //       System.out.println("res.success: >>> " + res.succeeded());
-      //       System.out.println("res.result: >>> " + res.result());
-      //       System.out.println("res.cause: >>> " + res.cause());          
-      //     }).result()
-      //   );
-      //   // return b;
-      // } )
       .map( (AsyncFile file) -> fileHandler.readFileContents(file).onComplete(r->{}) )
       .compose( (Future<Buffer> fb) -> fb )
       .map( (Buffer contents) ->  fileHandler.parseOrdersJsonArray(contents).result() )
       .map( (OrderList list) -> this.addOrderToList(list, this.order) ) // produces the updated list
       .andThen( (AsyncResult<OrderList> res) -> {
-        // if (res.failed()) {
-        //   System.out.println("HERE HERE 83");
-        //   res.cause().printStackTrace();
-        //   Throwable temp = new Throwable();
-        //   temp.setStackTrace(
-        //     (StackTraceElement[])
-        //     Arrays.stream(res.cause().getStackTrace())
-        //     .filter(x -> x.getClassName().contains("giladanon"))
-        //     .collect(Collectors.toList()).toArray()
-        //   );
-        //   temp.printStackTrace();
-        // }
         fileHandler.writeContentsToFile( res.result() );  // dump list back to file
       })
       .andThen( ignore -> {
@@ -140,11 +108,6 @@ public class OrderAdder {
     Path path = fileHandler.ensureFilePath();
     return fileHandler.openDataFile(fileHandler.fullFilePath);
   }
-
-  // public void readAndParseOrders() {
-  //   fileHandler.readFileContents();
-  //   fileHandler.parseOrdersJsonArray();
-  // }
 
   public OrderList addOrderToList(OrderList list, Order toAdd) {
     if (list == null) {
@@ -187,9 +150,6 @@ public class OrderAdder {
     private Path fullFilePath;
 
     private Future<AsyncFile> openFile;
-    // private Future<Buffer> readFile;
-    // private Future<OrderList> parsedList;
-    // private AsyncFile asyncFile;
 
     public FileHandler(String filename) {
       this.filename = filename + ".json";
@@ -224,8 +184,6 @@ public class OrderAdder {
           String msg = (res.failed()) ?
             "A problem occured when opening the file" : "Success in opening/creating the file";
           System.out.println(msg + ", path: " + path);
-          // if (res.succeeded())
-          //   this.asyncFile = res.result();
         }
       );
       return openFile;
@@ -243,9 +201,6 @@ public class OrderAdder {
       Buffer readBuffer = Buffer.buffer((int)readLength);
       System.out.println("> File size to read detected as: (in bytes) " + readLength);
       warnIfFileTooBig(readLength);
-
-      // openFile.setReadPos(0); // read from file start pos
-      System.out.println("> called 'setReadPos'");
 
       // System.out.println("Exiting --- readFileContents() via 'readFile(path)'");
       // if (true)
@@ -269,38 +224,9 @@ public class OrderAdder {
       System.out.println("> called 'read' function");
 
       futureBuffer.result();
-      System.out.println("> called 'result' function");
-      
       futureBuffer.onFailure(
         f -> { System.out.println("futureBuffer returned with error.."); f.printStackTrace(); }
       );
-      System.out.println("> called 'onfailure' function");
-
-      // Future<Buffer> readFileFuture = openFile.map(
-      //   (Function<AsyncFile,Buffer>)(AsyncFile openResult) -> {
-      //     Future<Buffer> contentFuture =
-      //     fileSystem
-      //       .readFile(fullFilePath.toString())
-      //       .andThen(res -> {
-      //         if (res.succeeded()) {
-      //           Buffer buffer = res.result();
-      //           System.out.println(
-      //             "Success in reading file contents (len=" + buffer.length() +"), path: " + filename);
-      //         }
-      //         else
-      //           System.out.println("A problem occured when reading a file, path: " + filename);
-      //       }
-      //     );
-      //       System.out.println("Running --- readFile.andThen registered");
-      //       System.out.println("this.readFile => " + readFile);
-      //     return contentFuture.result();
-      //   }
-      // )
-      // .onFailure(failure -> {
-      //   System.out.println("A problem occured BEFORE file could be read, path: " + filename);
-      //   failure.printStackTrace();
-      // });
-      // return readFileFuture;
 
       System.out.println("Exiting --- readFileContents()");
       return futureBuffer;
@@ -337,23 +263,9 @@ public class OrderAdder {
           promise.fail(e);
         }
       }
-      //   },
-      //   (Throwable failure) -> {
-      //     System.out.println("A problem occured BEFORE file could be parsed, path: " + filename);
-      //     System.out.println(failure.getLocalizedMessage());
-      //     return;
-      //   }
-      // )
-      ;
 
       return parsedList;
     }
-
-    // public Future<OrderList> getCurrentOrdersList() {
-    //   System.out.println("Running --- getCurrentOrdersList");
-    //   if (this.parsedList == null) return parseOrdersJsonArray(this.readFile);
-    //   return this.parsedList;
-    // }
 
     public void writeContentsToFile(OrderList list) {
       System.out.println("Running --- writeContentsToFile()");
