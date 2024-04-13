@@ -1,4 +1,4 @@
-package com.giladanon.authTestModule.DataObjects;
+package com.giladanon.sharedModule.Common.Codecs;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -16,9 +16,9 @@ import io.vertx.json.schema.JsonSchema;
  * @author https://gist.github.com/OneManCrew/f4665f4c52f26f72034b597c7909e43b#file-genericcodec-java
  * @see https://levidoro.medium.com/vert-x-event-bus-send-any-object-with-generic-codec-t-a0bc1feab13a
  */
-public class GenericCodec<T> implements MessageCodec<T, T> {
+public class AuthGenericCodec<T> implements MessageCodec<T, T> {
     private final Class<T> cls;
-    public GenericCodec(Class<T> cls) {
+    public AuthGenericCodec(Class<T> cls) {
         super();
         this.cls = cls;
     }

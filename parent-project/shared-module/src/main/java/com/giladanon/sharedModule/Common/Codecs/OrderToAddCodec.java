@@ -1,4 +1,6 @@
-package com.giladanon.authTestModule.DataObjects;
+package com.giladanon.sharedModule.Common.Codecs;
+
+import com.giladanon.sharedModule.Common.POJO.OrderToAdd;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;

@@ -4,13 +4,13 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
-import com.giladanon.authTestModule.DataObjects.GenericCodec;
-import com.giladanon.authTestModule.DataObjects.Order;
-import com.giladanon.authTestModule.DataObjects.OrderToAdd;
-import com.giladanon.authTestModule.DataObjects.OrderToAddCodec;
 import com.giladanon.authTestModule.Handlers.*;
 import com.giladanon.authTestModule.Server.ResponseSender;
 import com.giladanon.authTestModule.Server.ServerStarter;
+// import com.giladanon.sharedModule.Common.Codecs.DataObjects.GenericCodec;
+// import com.giladanon.sharedModule.Common.Codecs.DataObjects.Order;
+// import com.giladanon.sharedModule.Common.Codecs.DataObjects.OrderToAdd;
+// import com.giladanon.sharedModule.Common.Codecs.DataObjects.OrderToAddCodec;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
@@ -37,6 +37,10 @@ import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.ext.web.sstore.SessionStore;
 import io.vertx.ext.web.sstore.cookie.CookieSessionStore;
 
+import com.giladanon.sharedModule.Common.POJO.OrderToAdd;
+import com.giladanon.sharedModule.Common.POJO.Order;
+import com.giladanon.sharedModule.Common.Codecs.GenericJsonCodec;
+
 public class MainVerticle extends AbstractVerticle {
 
   final static int PORT_NUM = 8888;
@@ -59,7 +63,7 @@ public class MainVerticle extends AbstractVerticle {
     //     OrderToAdd.class, new OrderToAddCodec()
     //   );
     vertx.eventBus().registerDefaultCodec(
-        OrderToAdd.class, new GenericCodec<OrderToAdd>(OrderToAdd.class)
+        OrderToAdd.class, new GenericJsonCodec<OrderToAdd>(OrderToAdd.class)
       );
     
     router.get("/TestEB").handler(context -> {

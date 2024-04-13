@@ -1,4 +1,4 @@
-package com.giladanon.extraTestModule;
+package com.giladanon.sharedModule.Common.Codecs;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,14 +10,15 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
+import io.vertx.json.schema.JsonSchema;
 
 /**
  * @author https://gist.github.com/OneManCrew/f4665f4c52f26f72034b597c7909e43b#file-genericcodec-java
  * @see https://levidoro.medium.com/vert-x-event-bus-send-any-object-with-generic-codec-t-a0bc1feab13a
  */
-public class GenericCodec<T> implements MessageCodec<T, T> {
+public class GenericJsonCodec<T> implements MessageCodec<T, T> {
     private final Class<T> cls;
-    public GenericCodec(Class<T> cls) {
+    public GenericJsonCodec(Class<T> cls) {
         super();
         this.cls = cls;
     }
@@ -25,22 +26,27 @@ public class GenericCodec<T> implements MessageCodec<T, T> {
     
     @Override
     public void encodeToWire(Buffer buffer, T s) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out = null;
-        try {
-            out = new ObjectOutputStream(bos);
-            out.writeObject(s);
-            out.flush();
-            byte[] yourBytes = bos.toByteArray();
-            buffer.appendInt(yourBytes.length);
-            buffer.appendBytes(yourBytes);
-            out.close();
-        } catch (IOException e) {
-        } finally {
-            try {
-                bos.close();
-            } catch (IOException ex) {}
-        }        
+        // ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        // ObjectOutput out = null;
+
+        System.out.println("Data as json: " + Json.encode(s));
+
+        // new JsonSchema()
+
+        Json.load();
+
+        Buffer jsonBuffer = Json.encodeToBuffer(s);
+        buffer.appendInt(jsonBuffer.length());
+        System.out.println("Written len=" + jsonBuffer.length());
+        buffer.appendBuffer(jsonBuffer);
+        System.out.println("Written json=" + jsonBuffer.toString());
+
+        // JsonObject decoded = (JsonObject) Json.decodeValue(jsonBuffer);
+        // T backToObj = decoded.mapTo(cls);
+        // System.out.println(backToObj);
+        // System.out.println(backToObj.getClass());
+
+        System.out.println("Successfylly encoded message to wire !");
     }
 
     @Override
@@ -61,32 +67,7 @@ public class GenericCodec<T> implements MessageCodec<T, T> {
         System.out.println(backToObj);
         System.out.println(backToObj.getClass());
 
-        return backToObj;
-
-        // ByteArrayInputStream bis = new ByteArrayInputStream(yourBytes);
-        // System.out.println("Reciever: ByteArrayInputStream created from bytes");
-        // try {
-        //     ObjectInputStream ois = new ObjectInputStream(bis);
-        //     @SuppressWarnings("unchecked")
-        //     T msg = (T) ois.readObject();
-        //     System.out.println("Reciever: raed & created (T)msg object successfylly");
-        //     ois.close();
-        //     return msg;
-        // } catch (IOException | ClassNotFoundException e) {
-        // 	System.out.println("Listen failed "+e.getMessage());
-        //     System.out.println(e.getCause());
-        //     e.printStackTrace();
-        //     System.out.println("Reciever: END OF CATCH BLOCK");
-        // } finally {
-        //     try {
-        //         bis.close();
-        //         System.out.println("Reciever: ByteArrayInputStream closed.");
-        //     } catch (IOException e) {
-        //         System.out.println("Reciever: ByteArrayInputStream error while closing");
-        //         System.out.println(e.getMessage());
-        //     }
-        // }
-        // return null;
+        return backToObj;        
     }
 
     @Override

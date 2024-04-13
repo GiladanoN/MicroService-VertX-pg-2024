@@ -89,6 +89,14 @@
       <version>${junit-jupiter.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.giladanon.sharedModule</groupId>
+      <artifactId>sharedModule-Build</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <!-- <scope>compile</scope> -->
+    </dependency>
+
   </dependencies>
 
   <build>

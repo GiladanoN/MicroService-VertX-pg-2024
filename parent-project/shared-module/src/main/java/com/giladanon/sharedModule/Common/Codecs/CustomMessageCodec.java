@@ -1,4 +1,5 @@
-// package com.giladanon.authTestModule.DataObjects;
+// package com.giladanon.sharedModule.Common.Codecs;
+// // package com.giladanon.authTestModule.DataObjects;
 
 // import io.vertx.core.buffer.Buffer;
 // import io.vertx.core.eventbus.MessageCodec;

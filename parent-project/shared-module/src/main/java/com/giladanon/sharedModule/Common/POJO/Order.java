@@ -1,10 +1,9 @@
-package com.giladanon.authTestModule.DataObjects;
+package com.giladanon.sharedModule.Common.POJO;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class Order implements Serializable {
+public class Order {
   
   UUID orderID;
   String orderName;
@@ -31,6 +30,19 @@ public class Order implements Serializable {
   public Order setOrderDate(Date orderDate) {
     this.orderDate = orderDate;
     return this;
+  }
+
+  @Override
+  public String toString() {
+    String asStr = "[OrderData]={";
+    if (orderID != null)
+      asStr += "order.id:(" + orderID + ") ,";
+    if (orderName != null)
+      asStr += "order.name:(" + orderName + ") ,";
+    if (orderDate != null)
+      asStr += "order.date:(" + orderDate + ") ,";
+    asStr += "}";
+    return asStr;
   }
 
 }

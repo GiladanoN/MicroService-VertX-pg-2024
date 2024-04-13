@@ -1,7 +1,8 @@
-package com.giladanon.extraTestModule;
+package com.giladanon.sharedModule.Common.POJO;
 
 import java.io.Serializable;
 import io.vertx.ext.auth.User;
+import com.giladanon.sharedModule.Common.POJO.Order;
 
 public class OrderToAdd implements Serializable {
 
