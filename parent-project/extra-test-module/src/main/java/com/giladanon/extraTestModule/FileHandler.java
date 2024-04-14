@@ -168,8 +168,12 @@ class FileHandler {
     try {
       String output = Json.encodePrettily(list);
       buffer.appendString(output);
-      AsyncFile asyncFile = this.openFile.result();
-      asyncFile.setWritePos(0).end(buffer);  // pottential "junk at end" issue, needs checking
+
+      // ensure file gets overwritten to avoid corrupted json
+      this.orderAdder.fileSystem.writeFile(fullFilePath.toString(), buffer);
+
+      // AsyncFile asyncFile = this.openFile.result();
+      // asyncFile.setWritePos(0).end(buffer);  // pottential "junk at end" issue, needs checking
     }
     catch (Exception e) {
       System.out.println("Something went wrong preparing or writing the data out...");
