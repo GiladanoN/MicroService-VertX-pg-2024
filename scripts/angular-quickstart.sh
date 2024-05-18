@@ -22,3 +22,5 @@ ng v
 # install(s):
 sudo npm install -g npm  # install latest/update npm version
 npm i -g @angular/cli@latest  # install latest angular-cli version
+
+npm i --save bootstrap@3 # install bootstrap3 (css)
